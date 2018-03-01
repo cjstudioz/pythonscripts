@@ -5,14 +5,14 @@ from functools import lru_cache
 
 # DB hosts - add more if nedded 
 DBS = dict(
-    MYDB = 'host:port/sid',    
+    CJDB = 'host:port/sid',    
 )
 
 PWS = dict(
     COMMON = {
       'mylogin': 'myPassword',                   
     },
-    MYDB={    
+    CJDB={    
       'mylogin': 'myPassword2',  
     },
 )
