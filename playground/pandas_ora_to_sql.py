@@ -11,8 +11,8 @@ import sqlalchemy as sa
 engine = sa.create_engine('oracle+cx_oracle://user:pw@host:port/sid') 
     
 df = pd.DataFrame({
-     'idx': xrange(10000),          
-     'val': [str(x) for x in xrange(10000)],
+     'idx': range(10000),          
+     'val': [str(x) for x in range(10000)],
 })                 
     
 #this is fast
