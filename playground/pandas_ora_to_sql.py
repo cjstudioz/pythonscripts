@@ -1,7 +1,7 @@
 '''
 -- on oracle db
 create table testtable(
-    idn number,
+    idx number,
     val varchar2(1024)
 )
 '''
@@ -21,6 +21,6 @@ engine.execute(sql, df.to_dict('record'))
 
 #this is really slow
 df.to_sql('testtable', engine, 
-        if_exists='append',
+  if_exists='append',
   index=False,  
 )
