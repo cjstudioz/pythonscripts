@@ -7,10 +7,9 @@ import pandas as pd
 import numpy as np
 import sqlalchemy as sa
 import logging
-import re
 
 def getEngine(*args, **kwargs):
-    engine = sa.create_engine('oracle+cx_oracle://localhost', *args, **kwargs)
+    engine = sa.create_engine('oracle+cx_oracle://APP_CEP_GED:#9kIlq8HGn@MRP_ADM_P1.WORLD', *args, **kwargs)
     return engine
 
 def insertDFOra(tablename, df, engine):
@@ -42,7 +41,7 @@ def insertDFOra(tablename, df, engine):
 
     #Correct String cols from NaN to Nones
     pandasengine = pd.io.sql.pandasSQL_builder(engine)
-    table = pd.io.sql.SQLTable(tablename, pandasengine, df, index=False)
+    table = pd.io.sql.SQLTable(tablename, pandasengine, subdf, index=False)
     cols, data_list = table.insert_data()
     rows = zip(*data_list)
     data = [dict((k, v) for k, v in zip(cols, row)) for row in rows]
@@ -68,9 +67,7 @@ def getOraDtypeOverrides(df):
     return dtypeOverrides
 
 def curateCol(col):
-    return re.sub(r'[/()-:\\&\\S\\% ]+', '_', col.lower())[:30]
-            
-                                          
+    return col.lower().replace(' ', '_').replace('/', '').replace('(', '').replace(')', '').replace('-', '')[:30]
 
 def createTableOra(tablename, df, engine):
     """
