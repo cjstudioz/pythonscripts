@@ -1,0 +1,32 @@
+import requests
+import logging
+
+BASE_FEED_URL = 'https://mp.morningstarcommodity.com/lds/providers/LIM/datasources/'
+
+def _getFeeds(datasourceName):
+    datasourceUrl = BASE_FEED_URL + datasourceName
+    logging.info('getting: %s' % datasourceUrl)
+    feedsReq = requests.get(datasourceUrl, auth=auth)   
+    feedsJson = feedsReq.json()
+    print feedsJson[0]['name']
+    feeds = [feed['name'] for feed in feedsJson['feeds']]
+    return feeds
+    
+auth = ('teodora.baeva@btgpactual.com','S7xL5dtZ')
+
+datasourcesReq = requests.get("https://mp.morningstarcommodity.com/lds/providers/LIM/datasources/", auth=auth)   
+datasources = datasourcesReq.json()
+
+feeds = {datasource['name'], datasource['name'] for datasource in datasources}
+
+
+datasourcesReq = requests.get('https://mp.morningstarcommodity.com/lds/providers/LIM/datasources/EEX', auth=auth)   
+datasources = datasourcesReq.json()
+
+https://mp.morningstarcommodity.com/lds/providers/LIM/datasources/Gfi
+https://mp.morningstarcommodity.com/lds/providers/LIM/datasources/%s
+
+metadataURL = 'https://mp.morningstarcommodity.com/lds/feeds/Eex_GasFuturesPrices/md'
+r = requests.get(metadataURL,
+    auth=
+)

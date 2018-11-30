@@ -1,0 +1,9 @@
+import os
+import csv
+dir = r"C:\Documents and Settings\CJ\My Documents\Google Drive\Receipts\201617"
+files = os.listdir(dir)
+contents = [f.split('_') for f in files]
+with open(r'c:\temp\all.csv', 'wb') as file:
+    writer = csv.writer(file)
+    writer.writerows(contents)
+    
