@@ -1,0 +1,41 @@
+from collections.abc import Mapping #like dict
+
+def update_nested(origdict:dict, updatedict:dict):
+	"""
+	NOTE: doesn't preserve order of list and tuples
+
+	"""
+	for updatekey, updateval in updatedict.items():
+		origval = origdict.get(updatekey, {})
+		if all([  # if both updateval, origval are dicts then recurse
+		    isinstance(x, Mapping) for x in [updateval, origval]
+		]):
+			origdict[updatekey] = update_nested(origval, updateval)
+		elif all([  # if both updateval, origval are list like
+			isinstance(x, (set, tuple, list)) for x in [updateval, origval]
+		]):
+			origdict[updatekey] = list(set(updateval).union(set(origval)))
+		else:
+			origdict[updatekey] = updateval
+	
+	return origdict
+
+
+update_nested(
+	{
+		'a': {
+			'b': {
+				'c': 1,
+				'e': 1
+			}
+		}
+	},
+	{
+		'a': {
+			'b': {
+				'd': 1,
+				'c': 2
+			}
+		}
+	},
+)
